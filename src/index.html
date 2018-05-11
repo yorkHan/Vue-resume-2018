@@ -115,7 +115,7 @@
                 </section>
             </div>
         </main>
-        <div v-show="loginVisible" class="login">
+        <div v-show="loginVisible" class="login" v-cloak>
             <form class="form" @submit.prevent="onLogIn">
                 <h2>登录</h2>
                 <button type="button" @click="loginVisible=false">X</button>
@@ -133,7 +133,7 @@
                 </div>
             </form>
         </div>
-        <div v-show="signUpVisible" class="signUp">
+        <div v-show="signUpVisible" class="signUp" v-cloak>
             <form class="form"  @submit.prevent="onSignUp">
                 <h2>注册</h2>
                 <button type="button" @click="signUpVisible=false">X</button>
