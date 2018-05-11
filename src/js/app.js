@@ -2,7 +2,7 @@ let app=new Vue({
     el:'#page',
     data:{
         loginVisible:false,
-        signInVisible:false,
+        signUpVisible:false,
         resume:{
             name:'姓名',
             job:'应聘岗位',
@@ -20,7 +20,7 @@ let app=new Vue({
             let currentUser = AV.User.current();
             if(!currentUser){
                 this.loginVisible=true
-            }else {
+            }else{
                 this.saveResume()
             }
         },

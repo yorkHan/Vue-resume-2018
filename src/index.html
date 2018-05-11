@@ -5,6 +5,7 @@
     <title>简历编辑器</title>
     <link href="./css/index.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/signUp.css">
 </head>
 <body>
     <div class="page" id="page">
@@ -128,14 +129,14 @@
                 </div>
                 <div class="actions">
                     <button>登录</button>
-                    <a href="#" @click="signInVisible=true;loginVisible=false">注册</a>
+                    <a href="#" @click="signUpVisible=true;loginVisible=false">注册</a>
                 </div>
             </form>
         </div>
-        <div v-show="signInVisible" class="signIn">
+        <div v-show="signUpVisible" class="signUp">
             <form class="form">
                 <h2>注册</h2>
-                <button @click="signInVisible=false">X</button>
+                <button @click="signUpVisible=false">X</button>
                 <div class="row">
                     <label>邮箱</label>
                     <input type="text">
@@ -146,7 +147,7 @@
                 </div>
                 <div class="actions">
                     <button>注册</button>
-                    <a href="#" @click="signInVisible=false;loginVisible=true">返回登录</a>
+                    <a href="#" @click="signUpVisible=false;loginVisible=true">返回登录</a>
                 </div>
             </form>
         </div>
