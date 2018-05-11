@@ -2,7 +2,7 @@ let app=new Vue({
     el:'#page',
     data:{
         loginVisible:false,
-        signUpVisible:true,
+        signUpVisible:false,
         resume:{
             name:'姓名',
             job:'应聘岗位',
@@ -65,6 +65,11 @@ let app=new Vue({
             user.set('resume',this.resume);
             // 保存到云端
             user.save();
+        },
+        onLogOut(){
+            AV.User.logOut();
+            window.location.reload()
+            alert('登出成功')
         }
     }
 })
