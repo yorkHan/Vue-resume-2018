@@ -12,7 +12,7 @@
         <aside>
             <div class="upper">
                 <ul class="actions">
-                    <li><button @click="onclickSave" class="button">保存</button></li>
+                    <li><button @click="onClickSave" class="button">保存</button></li>
                     <li><button class="button">分享</button></li>
                     <li><button class="button">打印</button></li>
                     <li><button class="button">换肤</button></li>
@@ -116,37 +116,41 @@
             </div>
         </main>
         <div v-show="loginVisible" class="login">
-            <form class="form">
+            <form class="form" @submit.prevent="onLogIn">
                 <h2>登录</h2>
-                <button @click="loginVisible=false">X</button>
+                <button type="button" @click="loginVisible=false">X</button>
                 <div class="row">
-                    <label>邮箱</label>
-                    <input type="text">
+                    <label>用户名</label>
+                    <input type="text" v-model="logIn.username">
                 </div>
                 <div class="row">
                     <label>密码</label>
-                    <input type="text">
+                    <input type="password" v-model="logIn.password">
                 </div>
                 <div class="actions">
-                    <button>登录</button>
+                    <button type="submit">登录</button>
                     <a href="#" @click="signUpVisible=true;loginVisible=false">注册</a>
                 </div>
             </form>
         </div>
         <div v-show="signUpVisible" class="signUp">
-            <form class="form">
+            <form class="form"  @submit.prevent="onSignUp">
                 <h2>注册</h2>
-                <button @click="signUpVisible=false">X</button>
+                <button type="button" @click="signUpVisible=false">X</button>
                 <div class="row">
                     <label>邮箱</label>
-                    <input type="text">
+                    <input type="text" v-model="signUp.email">
+                </div>
+                <div class="row">
+                    <label>用户名</label>
+                    <input type="text" v-model="signUp.username">
                 </div>
                 <div class="row">
                     <label>密码</label>
-                    <input type="text">
+                    <input type="password" v-model="signUp.password">
                 </div>
                 <div class="actions">
-                    <button>注册</button>
+                    <button type="submit">注册</button>
                     <a href="#" @click="signUpVisible=false;loginVisible=true">返回登录</a>
                 </div>
             </form>
