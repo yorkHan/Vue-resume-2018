@@ -1,6 +1,10 @@
 let app=new Vue({
     el:'#page',
     data:{
+        currentUser:{
+            id:undefined,
+            username:'',
+        },
         loginVisible:false,
         signUpVisible:false,
         resume:{
@@ -41,15 +45,16 @@ let app=new Vue({
             user.setPassword(this.signUp.password);
             // 设置邮箱
             user.setEmail(this.signUp.email);
-            user.signUp().then(function (user) {
+            user.signUp().then( (user)=> {
                 console.log(user);
-            }, function (error) {
+            }, (error)=> {
             });
         },
         onLogIn(){
-            AV.User.logIn(this.logIn.username,this.logIn.password).then(function (user) {
-                console.log(user);
-            }, function (error) {
+            AV.User.logIn(this.logIn.username,this.logIn.password).then((user)=>{
+                this.currentUser.id=user.id
+                this.currentUser.username=user.attribute.username
+            }, (error)=> {
                 if(error.code===211){
                     alert('用户名不存在')
                 }else if(error.code===210){
@@ -73,3 +78,8 @@ let app=new Vue({
         }
     }
 })
+
+currentUser=AV.User.current()
+if(currentUser){
+    app.currentUser=currentUser
+}

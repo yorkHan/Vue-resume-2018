@@ -19,13 +19,14 @@
                 </ul>
             </div>
             <div class="down">
-                <button @click="onLogOut">登出</button>
+                <button @click="onLogOut" v-show="!!currentUser.id">登出</button>
             </div>
         </aside>
         <main>
             <div class="resume">
                 <section>
                     <h1>
+                        {{currentUser}}
                         <editable-span :value="resume.name" @edit="onEdit('name',$event)"></editable-span>
                     </h1>
                     <p class="profile"><editable-span :value="resume.job" @edit="onEdit('job',$event)"></editable-span></p>
