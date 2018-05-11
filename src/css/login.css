@@ -1,0 +1,17 @@
+.login,.signIn{
+    position: fixed;
+    min-width: 400px;
+    min-height: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login>.form,
+.signIn>.form{
+    background-color: #dddddd;
+    width: 100%;
+}

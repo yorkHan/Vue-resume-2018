@@ -114,8 +114,41 @@
                 </section>
             </div>
         </main>
-        <div class="login">
-            登录
+        <div v-show="loginVisible" class="login">
+            <form class="form">
+                <h2>登录</h2>
+                <button @click="loginVisible=false">X</button>
+                <div class="row">
+                    <label>邮箱</label>
+                    <input type="text">
+                </div>
+                <div class="row">
+                    <label>密码</label>
+                    <input type="text">
+                </div>
+                <div class="actions">
+                    <button>登录</button>
+                    <a href="#" @click="signInVisible=true;loginVisible=false">注册</a>
+                </div>
+            </form>
+        </div>
+        <div v-show="signInVisible" class="signIn">
+            <form class="form">
+                <h2>注册</h2>
+                <button @click="signInVisible=false">X</button>
+                <div class="row">
+                    <label>邮箱</label>
+                    <input type="text">
+                </div>
+                <div class="row">
+                    <label>密码</label>
+                    <input type="text">
+                </div>
+                <div class="actions">
+                    <button>注册</button>
+                    <a href="#" @click="signInVisible=false;loginVisible=true">返回登录</a>
+                </div>
+            </form>
         </div>
     </div>
     <script src="./vendor/vue.min.js"></script>

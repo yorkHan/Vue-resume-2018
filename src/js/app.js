@@ -1,6 +1,8 @@
-var app=new Vue({
+let app=new Vue({
     el:'#page',
     data:{
+        loginVisible:false,
+        signInVisible:false,
         resume:{
             name:'姓名',
             job:'应聘岗位',
@@ -15,19 +17,16 @@ var app=new Vue({
             this.resume[key]=value
         },
         onclickSave(){
-            var currentUser = AV.User.current();
-            if(currentUser){
-                this.showLogin()
+            let currentUser = AV.User.current();
+            if(!currentUser){
+                this.loginVisible=true
             }else {
                 this.saveResume()
             }
         },
-        showLogin(){
-
-        },
         saveResume(){
-            var User = AV.Object.extend('User');
-            var user = new User();
+            let User = AV.Object.extend('User');
+            let user = new User();
             user.set('resume',this.resume);
             user.save().then(function (todo) {
 
