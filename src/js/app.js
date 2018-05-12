@@ -13,7 +13,13 @@ let app=new Vue({
             gender:'男',
             birthday:'19930916',
             phoneNumber:'15444455588',
-            email:'393900482@qq.com'
+            email:'393900482@qq.com',
+            skills:[
+                {name:'请添加技能',description:'请添加描述'},
+                {name:'请添加技能',description:'请添加描述'},
+                {name:'请添加技能',description:'请添加描述'},
+                {name:'请添加技能',description:'请添加描述'},
+            ]
         },
         logIn:{
             username:'',
@@ -27,7 +33,17 @@ let app=new Vue({
     },
     methods:{
         onEdit(key,value){
-            this.resume[key]=value
+            let regex = /\[(\d+)\]/g
+            key =key.replace(regex,(match,number)=>`.${number}`)
+            let keys=key.split('.')
+            let result=this.resume
+            for(let i=0;i<keys.length;i++){
+                if(i===keys.length-1){
+                    result[keys[i]]=value
+                }else{
+                    result=result[keys[i]]
+                }
+            }
         },
         onClickSave(){
             let currentUser = AV.User.current();
@@ -61,7 +77,7 @@ let app=new Vue({
                 this.currentUser.objectId=user.objectId
                 this.currentUser.username=user.username
                 this.loginVisible=false
-                this.resume=user.resume
+                Object.assign(this.resume,user.resume)
             }, (error)=> {
                 if(error.code===211){
                     alert('用户名不存在')
@@ -72,7 +88,6 @@ let app=new Vue({
         },
         hasLogin(){
           return !!this.currentUser.objectId
-            console.log(this.currentUser)
         },
         saveResume(){
             console.log(AV.User.current());
@@ -91,6 +106,12 @@ let app=new Vue({
             AV.User.logOut();
             window.location.reload()
             alert('登出成功')
+        },
+        addSkill(){
+            this.resume.skills.push({name:'请添加技能',description:'请添加描述'})
+        },
+        removeSkill(index){
+            this.resume.skills.splice(index,1)
         }
     }
 })

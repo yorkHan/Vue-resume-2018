@@ -26,6 +26,7 @@
             <div>
                 {{currentUser.username}}
             </div>
+            {{resume}}
             <div class="resume">
                 <section>
                     <h1>
@@ -45,21 +46,17 @@
                 <section class="skills">
                     <h1>技能</h1>
                     <ul>
-                        <li>
-                            <span class="name">静态页面设计</span>
-                            <div class="description">完美实现设计稿</div>
+                        <li  v-for="skill,index in resume.skills">
+                            <editable-span class="name" :value="skill.name"  @edit="onEdit(`skills[${index}].name`,$event)">{{skill.name}}</editable-span>
+                            <div class="description">
+                                <editable-span :value="skill.description" @edit="onEdit(`skills[${index}].description`,$event)">
+                                    {{skill.description}}
+                                </editable-span>
+                            </div>
+                            <button v-if="index>=4" v-on:click="removeSkill(index)">删除</button>
                         </li>
                         <li>
-                            <span class="name">静态页面设计</span>
-                            <div class="description">完美实现设计稿</div>
-                        </li>
-                        <li>
-                            <span class="name">静态页面设计</span>
-                            <div class="description">完美实现设计稿</div>
-                        </li>
-                        <li>
-                            <span class="name">静态页面设计</span>
-                            <div class="description">完美实现设计稿</div>
+                            <button v-on:click="addSkill">添加</button>
                         </li>
                     </ul>
                 </section>
