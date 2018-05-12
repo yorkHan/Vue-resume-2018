@@ -29,6 +29,12 @@ ul, ol {
     list-style: none;
 }
 
+.exitPreview{
+  position: fixed;
+  left: 20px;
+  top: 20px;
+}
+
 @media (min-width: 500px) {
     .page {
         height: 100vh;

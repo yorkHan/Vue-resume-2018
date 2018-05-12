@@ -1,13 +1,18 @@
 let app=new Vue({
     el:'#page',
     data:{
+        previewUser:{
+            objectId:undefined,
+        },
         currentUser:{
             objectId:undefined,
-            username:undefined,
+            username:'',
         },
         loginVisible:false,
         signUpVisible:false,
         shareVisible:false,
+        previewResume:{
+        },
         resume:{
             name:'姓名',
             job:'应聘岗位',
@@ -25,8 +30,8 @@ let app=new Vue({
                 {name:'项目名称',url:'请填入链接',keywords:'关键字（请用，分隔）',description:'请添加描述'},
                 {name:'项目名称',url:'请填入链接',keywords:'关键字（请用，分隔）',description:'请添加描述'},
             ],
-
         },
+        mode:'edit', //'preview'
         sharedLink:'',
         logIn:{
             username:'',
@@ -36,6 +41,18 @@ let app=new Vue({
             email:'',
             username:'',
             password:''
+        }
+    },
+    computed:{
+      displayResume(){
+            return this.mode === 'preview' ? this.previewResume : this.resume
+      }
+    },
+    watch:{
+        'currentUser.objectId':function (newValue,oldValue) {
+            if(newValue){
+                this.getResume(this.currentUser)
+            }
         }
     },
     methods:{
@@ -64,7 +81,7 @@ let app=new Vue({
                 this.shareVisible=!this.shareVisible
         },
         onSignUp(){
-            let user = new AV.User();
+            const user = new AV.User();
             // 设置用户名
             user.setUsername(this.signUp.username);
             // 设置密码
@@ -100,8 +117,7 @@ let app=new Vue({
           return !!this.currentUser.objectId
         },
         saveResume(){
-            console.log(AV.User.current());
-            let objectId=AV.User.current().id
+            let {objectId} = AV.User.current().toJSON()
             let user = AV.Object.createWithoutData('User',objectId);
             // 修改属性
             user.set('resume',this.resume);
@@ -111,6 +127,13 @@ let app=new Vue({
             },()=>{
                 alert('保存失败')
             });
+        },
+        getResume(user){
+            let User = new AV.Query('User');
+            return User.get(user.objectId).then( (user) =>{
+                let resume=user.toJSON().resume
+                return resume
+            })
         },
         onLogOut(){
             AV.User.logOut();
@@ -138,15 +161,26 @@ let app=new Vue({
     }
 })
 
+//获取当前用户
 let currentUser=AV.User.current()
 if(currentUser){
     app.currentUser=currentUser.toJSON()
-    let User = new AV.Query('User');
-    User.get(app.currentUser.objectId).then( (user) =>{
-        user=user.toJSON()
-        app.resume=user.resume
-        app.sharedLink=location.origin+location.pathname+'?user_id='+app.currentUser.objectId
-    }, (error)=> {
-        // 异常处理
-    });
+    app.sharedLink=location.origin+location.pathname+'?user_id='+app.currentUser.objectId
+    app.getResume(app.currentUser).then(resume=>{
+        app.resume=resume
+    })
 }
+
+//获取预览用户的id
+let search=location.search
+let regex = /user_id=([^&]+)/
+let matches=search.match(regex)
+let userId
+if(matches){
+    userId=matches[1]
+    app.mode='preview'
+    app.getResume({objectId:userId}).then(resume=>{
+        app.previewResume=resume
+    })
+}
+
