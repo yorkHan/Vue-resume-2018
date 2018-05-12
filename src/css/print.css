@@ -1,0 +1,9 @@
+.page>aside{
+    display: none;
+}
+.skills .remove,
+.skills .add,
+.projects .remove,
+.projects .add{
+    display: none;
+}
