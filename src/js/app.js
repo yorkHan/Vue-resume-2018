@@ -7,6 +7,7 @@ let app=new Vue({
         },
         loginVisible:false,
         signUpVisible:false,
+        shareVisible:false,
         resume:{
             name:'姓名',
             job:'应聘岗位',
@@ -19,8 +20,14 @@ let app=new Vue({
                 {name:'请添加技能',description:'请添加描述'},
                 {name:'请添加技能',description:'请添加描述'},
                 {name:'请添加技能',description:'请添加描述'},
-            ]
+            ],
+            projects:[
+                {name:'项目名称',url:'请填入链接',keywords:'关键字（请用，分隔）',description:'请添加描述'},
+                {name:'项目名称',url:'请填入链接',keywords:'关键字（请用，分隔）',description:'请添加描述'},
+            ],
+
         },
+        sharedLink:'',
         logIn:{
             username:'',
             password:''
@@ -52,6 +59,9 @@ let app=new Vue({
             }else{
                 this.loginVisible=true
             }
+        },
+        onClickShare(){
+                this.shareVisible=!this.shareVisible
         },
         onSignUp(){
             let user = new AV.User();
@@ -112,17 +122,30 @@ let app=new Vue({
         },
         removeSkill(index){
             this.resume.skills.splice(index,1)
+        },
+        addProject(){
+            let projects=this.resume.projects
+            if(projects){
+                projects.push({name:'项目名称',url:'请填入链接',keywords:'关键字（请用，分隔）',description:'请添加描述'})
+            }else{
+
+            }
+
+        },
+        removeProject(index){
+            this.resume.projects.splice(index,1)
         }
     }
 })
 
-currentUser=AV.User.current()
+let currentUser=AV.User.current()
 if(currentUser){
     app.currentUser=currentUser.toJSON()
     let User = new AV.Query('User');
     User.get(app.currentUser.objectId).then( (user) =>{
-        console.log(user.toJSON());
-        app.resume=user.toJSON().resume
+        user=user.toJSON()
+        app.resume=user.resume
+        app.sharedLink=location.origin+location.pathname+'?user_id='+app.currentUser.objectId
     }, (error)=> {
         // 异常处理
     });
