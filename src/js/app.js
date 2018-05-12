@@ -2,8 +2,8 @@ let app=new Vue({
     el:'#page',
     data:{
         currentUser:{
-            id:undefined,
-            username:'',
+            objectId:undefined,
+            username:undefined,
         },
         loginVisible:false,
         signUpVisible:false,
@@ -46,14 +46,22 @@ let app=new Vue({
             // 设置邮箱
             user.setEmail(this.signUp.email);
             user.signUp().then( (user)=> {
-                console.log(user);
+                alert('注册成功')
+                user=user.toJSON()
+                this.currentUser.objectId=user.objectId
+                this.currentUser.username=user.username
+                this.signUpVisible=false
             }, (error)=> {
+                alert(error.rawMessage)
             });
         },
         onLogIn(){
             AV.User.logIn(this.logIn.username,this.logIn.password).then((user)=>{
-                this.currentUser.id=user.id
-                this.currentUser.username=user.attribute.username
+                user=user.toJSON()
+                this.currentUser.objectId=user.objectId
+                this.currentUser.username=user.username
+                this.loginVisible=false
+                this.resume=user.resume
             }, (error)=> {
                 if(error.code===211){
                     alert('用户名不存在')
@@ -62,14 +70,22 @@ let app=new Vue({
                 }
             });
         },
+        hasLogin(){
+          return !!this.currentUser.objectId
+            console.log(this.currentUser)
+        },
         saveResume(){
             console.log(AV.User.current());
-            let id=AV.User.current().id
-            let user = AV.Object.createWithoutData('User',id);
+            let objectId=AV.User.current().id
+            let user = AV.Object.createWithoutData('User',objectId);
             // 修改属性
             user.set('resume',this.resume);
             // 保存到云端
-            user.save();
+            user.save().then(()=>{
+                alert('保存成功')
+            },()=>{
+                alert('保存失败')
+            });
         },
         onLogOut(){
             AV.User.logOut();
@@ -81,5 +97,12 @@ let app=new Vue({
 
 currentUser=AV.User.current()
 if(currentUser){
-    app.currentUser=currentUser
+    app.currentUser=currentUser.toJSON()
+    let User = new AV.Query('User');
+    User.get(app.currentUser.objectId).then( (user) =>{
+        console.log(user.toJSON());
+        app.resume=user.toJSON().resume
+    }, (error)=> {
+        // 异常处理
+    });
 }
