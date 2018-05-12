@@ -11,6 +11,7 @@ let app=new Vue({
         loginVisible:false,
         signUpVisible:false,
         shareVisible:false,
+        pickThemeVisible:false,
         previewResume:{
         },
         resume:{
@@ -49,7 +50,7 @@ let app=new Vue({
       }
     },
     watch:{
-        'currentUser.objectId':function (newValue,oldValue) {
+        'currentUser.objectId':function (newValue) {
             if(newValue){
                 this.getResume(this.currentUser)
             }
@@ -160,6 +161,9 @@ let app=new Vue({
         },
         print(){
             window.print()
+        },
+        pickTheme(name){
+            document.body.className=name
         }
     }
 })

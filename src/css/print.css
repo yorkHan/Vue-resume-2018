@@ -7,3 +7,6 @@
 .projects .add{
     display: none;
 }
+.page>main{
+    padding: 5vw;
+}

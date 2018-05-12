@@ -1,0 +1,74 @@
+body.aqua{
+    background-color: aqua;
+    color:darkblue;
+}
+body.aqua .resume {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+body.aqua .resume > section {
+    margin: 50px 0;
+}
+
+body.aqua .resume > section .editable{
+    position: relative;
+}
+
+body.aqua .resume > section .editable button{
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    white-space:nowrap;
+    z-index: 1;
+}
+
+body.aqua .resume > section .editable:hover button {
+    display: inline-block;
+}
+
+body.aqua .resume > section > h1,
+body.aqua .resume > section > h2 {
+    text-align: center;
+    margin: 20px 0;
+}
+/*skills*/
+body.aqua .resume > section > .profile {
+    text-align: center;
+}
+
+body.aqua .resume > section.skills > ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+body.aqua .resume > section.skills > ul > li {
+    width: 48%;
+    border: 1px solid darkblue;
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+/*projects*/
+body.aqua .resume > section.projects > ol > li {
+    margin: 30px 0;
+    padding: 10px;
+    border: 1px solid darkblue;
+}
+
+body.aqua .resume > section.projects > ol > li > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+body.aqua .resume > section.projects > ol > li > header h3 {
+    margin-right: 1em;
+}
+
+body.aqua .resume > section.projects > ol > li > header .start {
+    display: flex;
+}

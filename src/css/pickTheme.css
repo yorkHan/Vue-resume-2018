@@ -1,0 +1,16 @@
+.pickTheme{
+    position: fixed;
+    min-width: 400px;
+    min-height: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: aqua;
+    text-align: center;
+}
+.chooseSkin{
+    margin-top: 5vw;
+}
+.chooseSkin>button{
+    margin: 0 5vw;
+}
